@@ -4,6 +4,8 @@ import postRoute from './routes/post-routes.js';
 import authRoute from './routes/auth-routes.js';
 import testRoute from './routes/test-routes.js';
 import userRoute from './routes/user-routes.js';
+import chatRoute from './routes/chat-routes.js';
+import messageRoute from './routes/message-routes.js';
 import cookieParser from 'cookie-parser';
 
 const app = express();
@@ -16,6 +18,8 @@ app.use('/api/auth', authRoute);
 app.use('/api/users', userRoute);
 app.use('/api/test', testRoute);
 app.use('/api/posts', postRoute);
+app.use('/api/chats', chatRoute);
+app.use('/api/messages', messageRoute);
 
 app.listen(3300, () => {
 	console.log('Server is running!');
