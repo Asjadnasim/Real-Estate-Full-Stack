@@ -15,11 +15,8 @@ function NewPostPage() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-
 		const formData = new FormData(e.target);
-
 		const inputs = Object.fromEntries(formData);
-		// console.log(inputs);
 
 		try {
 			const res = await apiRequest.post('/posts', {
@@ -42,9 +39,9 @@ function NewPostPage() {
 					pet: inputs.pet,
 					income: inputs.income,
 					size: parseInt(inputs.size),
-					school: inputs.school,
-					bus: inputs.bus,
-					restaurant: inputs.restaurant,
+					school: parseInt(inputs.school),
+					bus: parseInt(inputs.bus),
+					restaurant: parseInt(inputs.restaurant),
 				},
 			});
 			navigate('/' + res.data.id);
@@ -66,7 +63,7 @@ function NewPostPage() {
 						</div>
 						<div className='item'>
 							<label htmlFor='price'>Price</label>
-							<input min={10} id='price' name='price' type='number' />
+							<input id='price' name='price' type='number' />
 						</div>
 						<div className='item'>
 							<label htmlFor='address'>Address</label>
@@ -114,6 +111,7 @@ function NewPostPage() {
 								<option value='land'>Land</option>
 							</select>
 						</div>
+
 						<div className='item'>
 							<label htmlFor='utilities'>Utilities Policy</label>
 							<select name='utilities'>
@@ -165,10 +163,10 @@ function NewPostPage() {
 				))}
 				<UploadWidget
 					uwConfig={{
+						multiple: true,
+						folder: 'posts',
 						cloudName: 'di5shcgd6',
 						uploadPreset: 'estate',
-						multiple: true,
-						folder: 'post',
 					}}
 					setState={setImages}
 				/>

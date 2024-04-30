@@ -1,8 +1,7 @@
 import './singlePage.scss';
 import Slider from '../../components/slider/Slider';
 import Map from '../../components/map/Map';
-// import { singlePostData, userData } from '../../lib/dummydata';
-import { useLoaderData, useNavigate } from 'react-router-dom';
+import { useNavigate, useLoaderData } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
@@ -11,21 +10,19 @@ import apiRequest from '../../lib/apiRequest';
 function SinglePage() {
 	const post = useLoaderData();
 	const [saved, setSaved] = useState(post.isSaved);
-	const navigate = useNavigate();
 	const { currentUser } = useContext(AuthContext);
+	const navigate = useNavigate();
 
-	// console.log(post);
 	const handleSave = async () => {
-		// AFTER REACT 19 USED UPTIMISTICK HOOK
-		setSaved((prev) => !prev);
 		if (!currentUser) {
 			navigate('/login');
 		}
-
+		// AFTER REACT 19 UPDATE TO USEOPTIMISTIK HOOK
+		setSaved((prev) => !prev);
 		try {
 			await apiRequest.post('/users/save', { postId: post.id });
-		} catch (error) {
-			console.log(error);
+		} catch (err) {
+			console.log(err);
 			setSaved((prev) => !prev);
 		}
 	};
@@ -68,7 +65,7 @@ function SinglePage() {
 							<div className='featureText'>
 								<span>Utilities</span>
 								{post.postDetail.utilities === 'owner' ? (
-									<p>Renter is responsible</p>
+									<p>Owner is responsible</p>
 								) : (
 									<p>Tenant is responsible</p>
 								)}
@@ -81,7 +78,7 @@ function SinglePage() {
 								{post.postDetail.pet === 'allowed' ? (
 									<p>Pets Allowed</p>
 								) : (
-									<p>Pets Not Allowed</p>
+									<p>Pets not Allowed</p>
 								)}
 							</div>
 						</div>
@@ -97,7 +94,7 @@ function SinglePage() {
 					<div className='sizes'>
 						<div className='size'>
 							<img src='/size.png' alt='' />
-							<span>{post.postDetail.size}sqft</span>
+							<span>{post.postDetail.size} sqft</span>
 						</div>
 						<div className='size'>
 							<img src='/bed.png' alt='' />
@@ -126,24 +123,14 @@ function SinglePage() {
 							<img src='/pet.png' alt='' />
 							<div className='featureText'>
 								<span>Bus Stop</span>
-								<p>
-									{post.postDetail.bus > 999
-										? post.postDetail.bus / 1000 + 'km'
-										: post.postDetail.bus + 'm'}{' '}
-									away
-								</p>
+								<p>{post.postDetail.bus}m away</p>
 							</div>
 						</div>
 						<div className='feature'>
 							<img src='/fee.png' alt='' />
 							<div className='featureText'>
 								<span>Restaurant</span>
-								<p>
-									{post.postDetail.restaurant > 999
-										? post.postDetail.restaurant / 1000 + 'km'
-										: post.postDetail.restaurant + 'm'}{' '}
-									away
-								</p>
+								<p>{post.postDetail.restaurant}m away</p>
 							</div>
 						</div>
 					</div>

@@ -1,6 +1,7 @@
 import './register.scss';
-import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useState } from 'react';
 import apiRequest from '../../lib/apiRequest';
 
 function Register() {
@@ -13,7 +14,6 @@ function Register() {
 		e.preventDefault();
 		setError('');
 		setIsLoading(true);
-
 		const formData = new FormData(e.target);
 
 		const username = formData.get('username');
@@ -21,25 +21,21 @@ function Register() {
 		const password = formData.get('password');
 
 		try {
-			// console.log(username, email, password);
 			const res = await apiRequest.post('/auth/register', {
 				username,
 				email,
 				password,
 			});
 
-			// console.log(res.data);
 			navigate('/login');
 		} catch (err) {
-			// console.log(err);
 			setError(err.response.data.message);
 		} finally {
 			setIsLoading(false);
 		}
 	};
-
 	return (
-		<div className='register'>
+		<div className='registerPage'>
 			<div className='formContainer'>
 				<form onSubmit={handleSubmit}>
 					<h1>Create an Account</h1>

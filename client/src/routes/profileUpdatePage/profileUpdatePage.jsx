@@ -1,23 +1,19 @@
 import { useContext, useState } from 'react';
 import './profileUpdatePage.scss';
 import { AuthContext } from '../../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
 import apiRequest from '../../lib/apiRequest';
+import { useNavigate } from 'react-router-dom';
 import UploadWidget from '../../components/uploadWidget/UploadWidget';
 
 function ProfileUpdatePage() {
 	const { currentUser, updateUser } = useContext(AuthContext);
-	const [isLoading, setIsLoading] = useState(false);
-	const [avatar, setAvatar] = useState([]);
-
 	const [error, setError] = useState('');
+	const [avatar, setAvatar] = useState([]);
 
 	const navigate = useNavigate();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		setIsLoading(true);
-
 		const formData = new FormData(e.target);
 
 		const { username, email, password } = Object.fromEntries(formData);
@@ -29,14 +25,11 @@ function ProfileUpdatePage() {
 				password,
 				avatar: avatar[0],
 			});
-
 			updateUser(res.data);
-			// console.log(res.data);
 			navigate('/profile');
-			setIsLoading(false);
-		} catch (error) {
-			console.log(error);
-			setError(error.response.data.message);
+		} catch (err) {
+			console.log(err);
+			setError(err.response.data.message);
 		}
 	};
 
@@ -67,7 +60,7 @@ function ProfileUpdatePage() {
 						<label htmlFor='password'>Password</label>
 						<input id='password' name='password' type='password' />
 					</div>
-					<button disabled={isLoading}>Update</button>
+					<button>Update</button>
 					{error && <span>error</span>}
 				</form>
 			</div>

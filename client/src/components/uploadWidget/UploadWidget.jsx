@@ -3,7 +3,7 @@ import { createContext, useEffect, useState } from 'react';
 // Create a context to manage the script loading state
 const CloudinaryScriptContext = createContext();
 
-function UploadWidget({ uwConfig, setState }) {
+function UploadWidget({ uwConfig, setPublicId, setState }) {
 	const [loaded, setLoaded] = useState(false);
 
 	useEffect(() => {

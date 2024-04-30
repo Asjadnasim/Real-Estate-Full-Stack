@@ -9,9 +9,9 @@ import Register from './routes/register/register';
 import ProfileUpdatePage from './routes/profileUpdatePage/profileUpdatePage';
 import NewPostPage from './routes/newPostPage/newPostPage';
 import {
-	ListPageLoader,
+	listPageLoader,
 	profilePageLoader,
-	SinglePageLoader,
+	singlePageLoader,
 } from './lib/loaders';
 
 function App() {
@@ -27,12 +27,12 @@ function App() {
 				{
 					path: '/list',
 					element: <ListPage />,
-					loader: ListPageLoader,
+					loader: listPageLoader,
 				},
 				{
 					path: '/:id',
 					element: <SinglePage />,
-					loader: SinglePageLoader,
+					loader: singlePageLoader,
 				},
 
 				{

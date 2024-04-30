@@ -1,6 +1,6 @@
+import { useContext, useState } from 'react';
 import './login.scss';
 import { Link, useNavigate } from 'react-router-dom';
-import { useContext, useState } from 'react';
 import apiRequest from '../../lib/apiRequest';
 import { AuthContext } from '../../context/AuthContext';
 
@@ -14,35 +14,28 @@ function Login() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		setError('');
 		setIsLoading(true);
-
+		setError('');
 		const formData = new FormData(e.target);
 
 		const username = formData.get('username');
 		const password = formData.get('password');
 
 		try {
-			// console.log(username, email, password);
 			const res = await apiRequest.post('/auth/login', {
 				username,
 				password,
 			});
 
-			// console.log(res.data);
-
-			// localStorage.setItem('user', JSON.stringify(res.data));
 			updateUser(res.data);
 
 			navigate('/');
 		} catch (err) {
-			// console.log(err);
 			setError(err.response.data.message);
 		} finally {
 			setIsLoading(false);
 		}
 	};
-
 	return (
 		<div className='login'>
 			<div className='formContainer'>
@@ -58,10 +51,8 @@ function Login() {
 					/>
 					<input
 						name='password'
-						required
-						minLength={3}
-						maxLength={20}
 						type='password'
+						required
 						placeholder='Password'
 					/>
 					<button disabled={isLoading}>Login</button>
