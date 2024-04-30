@@ -1,5 +1,5 @@
 import express from 'express';
-import { verifyToken } from '../middleware/verify-token.js';
+import { verifyToken } from '../middleware/verifyToken.js';
 import {
 	addPost,
 	deletePost,
